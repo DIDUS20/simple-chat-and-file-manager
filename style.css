@@ -1,0 +1,154 @@
+.file_manager{
+    float: left;
+    background-color:rgb(151, 62, 79) ;
+    border-radius: 10%;
+    padding: 20px;
+    width: 400px;
+    margin-left: 50px;
+    border-width: 5px;
+    border-color: rgb(55, 55, 55);
+    border-style: solid;
+}
+table{
+
+}
+td{
+    height: 25px;
+}
+.loged_header{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    background-color: rgb(92, 150, 152);
+    padding-left: 40px;
+    border-width: 5px;
+    border-color: rgb(55, 55, 55);
+    border-style: solid;
+    border-radius: 10px;
+}
+.input_header{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10%;
+    height: 30px;
+}
+.new_folder{
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.96);
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.copy_files{
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.96);
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.upload_files{
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.96);
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.loged_chats{
+    height: 500px;
+    float: right;
+    width: 600px;
+    background-color: rgb(160, 152, 95);
+    margin-right: 50px;
+    border-radius: 10%;
+    padding: 20px;
+    border-width: 5px;
+    border-color: rgb(55, 55, 55);
+    border-style: solid;
+}
+.chat{
+    width: 400px;
+    text-align: left;
+    padding: 10px;
+    padding-left: 50px;
+    height: 50px;
+    font-size: large;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 5px;
+    border-color: rgb(0, 0, 0);
+    background-color: rgb(82, 82, 82);
+    
+}
+
+.username_header{
+    font-size: 30px;
+    float: right;
+    margin: 15px;
+}
+
+
+.login_form{
+    position:fixed;
+    border-radius: 10%;
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.652);
+    top: 40%;
+    left: 40%;
+    color:white;
+    border-width: 5px;
+    border-color: rgb(3, 1, 1);
+    border-style: ridge;
+}
+a{
+    color:white;
+}
+
+.signup_form{
+    position:fixed;
+    border-radius: 10%;
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.652);
+    top: 40%;
+    left: 40%;
+    color:white;
+    border-width: 5px;
+    border-color: rgb(3, 1, 1);
+    border-style: ridge;
+}
+
+input{
+    font-style: italic;
+    height: 30px;
+    background-color: rgb(55, 55, 55);
+    border-radius: 10px;
+    border-width: 2px;
+    border-color: rgb(3, 1, 1);
+    color: white;
+}
+.input_text{
+    width: 250px;
+    color: white;
+    background-color: black;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+}
+.input_login{
+    width: 70px;
+    font-style: italic;
+    height: 30px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+body{
+    color: white;
+}
+.empty{
+
+}
+
