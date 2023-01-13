@@ -85,7 +85,8 @@ td{
 .username_header{
     font-size: 30px;
     float: right;
-    margin: 15px;
+    margin-top: 10px;
+    margin-right: 20px;
 }
 
 

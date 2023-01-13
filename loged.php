@@ -1,7 +1,12 @@
 <?php
-    require_once "config.php";
 
+    require_once "config.php";
     session_start();
+
+    // Session control
+    if($_SESSION['loggedin'] == false){
+        header("location: index.php");
+    }
 
     // Define variables
     $htmlspecialchars = htmlspecialchars($_SERVER['PHP_SELF']);
@@ -21,7 +26,7 @@
     $background_loged = "logedbg.jpg";
     $background_signup = "";
 
-    // File size function
+    // File size
         function file_size_in_bytes($file){
             $size = filesize("$file");
             if($size > 1000 && $size < 1000000){
@@ -159,8 +164,6 @@
             }
                
         }
-
-        
         if(isset($_POST['Copy_files'])){
             if(!empty(trim($_POST['dest_path']))){
                 // When dest is not storage_path
@@ -195,8 +198,7 @@
                     $copy_err = "There is no destination folder";
                 }
             }    
-        }
-        
+        }  
         function dircopy ($source, $dest,$permissions = 0755){
                 // Folder Copy
             if(is_dir($source)){
@@ -214,7 +216,6 @@
             }
             
         }
-
     //
     // Upload
         if(isset($_GET['upload'])){
@@ -227,7 +228,6 @@
             </div>
             <?php
         }
-
         if(isset($_POST['Upload_files'])){
 
             foreach($_FILES["upfile"]['error'] as $key => $error){
@@ -240,7 +240,6 @@
 
             header("location: loged.php");
         }
-
     //
     // Chat
         if(isset($_GET['chat'])){
@@ -298,6 +297,11 @@
             }else if($_POST['new_message_reciver'] == $username){
                 $new_message_err = "Can't send message to yourself.";
             }
+        }
+    //
+    // Settings
+        if(isset($_GET['settings'])){
+            // Features 
         }
     //
 

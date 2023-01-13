@@ -13,7 +13,10 @@
     $htmlspecialchars = htmlspecialchars($_SERVER['PHP_SELF']);
 
     // Session control
-    if(session_status() == 2){
+    session_start();
+    if(@$_SESSION['loggedin'] == true){
+        header("location: loged.php");
+    }else{
         session_destroy();
     }
 
