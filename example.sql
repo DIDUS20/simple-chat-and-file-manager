@@ -3,14 +3,12 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 11 Sty 2023, 20:17
--- Wersja serwera: 10.4.24-MariaDB
--- Wersja PHP: 8.1.6
+-- SERVER: 10.4.24-MariaDB
+-- PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,13 +16,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `example`
+-- DB:`example`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `chats`
+-- Table:`chats`
 --
 
 CREATE TABLE `chats` (
@@ -37,7 +35,7 @@ CREATE TABLE `chats` (
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users`
+--Table:`users`
 --
 
 CREATE TABLE `users` (
@@ -51,11 +49,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indeksy dla zrzutów tabel
---
-
---
--- Indeksy dla tabeli `chats`
+-- Index `chats`
 --
 ALTER TABLE `chats`
   ADD PRIMARY KEY (`chat_id`),
@@ -63,35 +57,24 @@ ALTER TABLE `chats`
   ADD KEY `user2` (`user2`);
 
 --
--- Indeksy dla tabeli `users`
+-- Index `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `username` (`username`,`storage_path`);
 
 --
--- AUTO_INCREMENT dla zrzuconych tabel
---
-
---
--- AUTO_INCREMENT dla tabeli `chats`
+-- AUTO_INCREMENT `chats`
 --
 ALTER TABLE `chats`
   MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT dla tabeli `users`
+-- AUTO_INCREMENT `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `chats`
---
 ALTER TABLE `chats`
   ADD CONSTRAINT `chats_ibfk_1` FOREIGN KEY (`user1`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `chats_ibfk_2` FOREIGN KEY (`user2`) REFERENCES `users` (`user_id`);
