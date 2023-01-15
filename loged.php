@@ -306,6 +306,14 @@
     //
 
     if($_SESSION['loggedin'] == true && session_status() == 2){
+        // Check session time
+        $now = time();
+        if($now >= $_SESSION['expire']){
+            session_destroy();
+            header('location: index.php');
+        }else{
+            $_SESSION['expire'] = $now+($e_time*60);
+        }
 ?>
 <html>
     <head>

@@ -14,13 +14,11 @@
         echo"Oh No!! Server Not Working !!!";
     }
 
+    // Expire time (min)
+    $e_time = 1;
+
     // Titles
     $title_index = "Login";
     $title_loged = "Home";
     $title_signup = "Sign Up";
-
- 
-
-
-
 ?>

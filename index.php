@@ -56,7 +56,9 @@
                                 $_SESSION["id"] = $id;
                                 $_SESSION["username"] = $username; 
                                 $_SESSION["homepath"] = "users/$username";
-                                $_SESSION["path"] = "users/$username/storage";                       
+                                $_SESSION["path"] = "users/$username/storage";   
+                                $_SESSION["start_time"] = time();
+                                $_SESSION['expire'] = $_SESSION["start_time"]+($e_time*60);                   
                                 // Redirect user to welcome page
                                 header("location: loged.php");
                             }else{
