@@ -17,7 +17,7 @@ You need to see config.php.
     // - file_uploads=On                               *
     // - upload_max_filesize=500M                      *
     // - max_file_uploads=30                           *
-    // - find "Options Indexes FollowSymLinks Includes *
-    // ExecCGI" and disable it with "#"                *
+    // - find "Indexes Options " and disable           *
+    // it with "#"                                     *
     //                                                 *
     //**************************************************
