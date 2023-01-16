@@ -4,7 +4,7 @@ SIMPLE chat and file manager in PHP and SQL  [my first , so please be gentle] ï¼
 
 You need to see config.php.
 
-   //********************** TO DO *********************
+    //********************** TO DO *********************
     //                                                 *
     // #Import example.sql into DB                     *
     //                                                 *
@@ -17,5 +17,7 @@ You need to see config.php.
     // - file_uploads=On                               *
     // - upload_max_filesize=500M                      *
     // - max_file_uploads=30                           *
+    // - find "Options Indexes FollowSymLinks Includes *
+    // ExecCGI" and disable it with "#"                *
     //                                                 *
     //**************************************************
