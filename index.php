@@ -63,15 +63,15 @@
                                 header("location: loged.php");
                             }else{
                                 // Password is invalid, display a generic error message
-                                $login_err = "Invalid username or password.";
+                                $login_err = "<script>alert('ERROR : Invalid username or password.);</script>";
                             }
                         }
                     } else{
                         // Username doesn't exist, display a generic error message
-                        $login_err = "Invalid username or password.";
+                        $login_err = "<script>alert('ERROR : Invalid username or password.);</script>";
                     }
                 } else{
-                    $login_err = "Oops! Something went wrong. Please try again later.";
+                    $login_err = "<script>alert('ERROR : Oops! Something went wrong. Please try again later.);</script>";
                 }
                 // Close statement
                 mysqli_stmt_close($stmt);

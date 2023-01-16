@@ -10,9 +10,11 @@
     border-style: solid;
 }
 table{
-
 }
-td{
+tr{
+    height: 25px;
+}
+th{
     height: 25px;
 }
 .loged_header{

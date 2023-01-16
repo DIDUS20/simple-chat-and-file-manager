@@ -6,19 +6,26 @@
     define('DB_NAME', 'example');
     
     // Connect to mysql db
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $link = @mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
     
     // If Error
-    if($link === false){
-        die("ERROR: " . mysqli_connect_error());
-        echo"Oh No!! Server Not Working !!!";
+    if($link == false){
+        echo"\n Oh No!! Server Not Working !!!";
     }
 
     // Expire time (min)
-    $e_time = 1;
+    $e_time = 30;
 
     // Titles
     $title_index = "Login";
     $title_loged = "Home";
     $title_signup = "Sign Up";
+
+    // Max lenght of inputs in signup.php
+    $max_pass = 30;
+    $max_username = 30;
+    $max_surname = 30;
+    $max_name = 30;
+
+
 ?>

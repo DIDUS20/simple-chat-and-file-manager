@@ -252,7 +252,7 @@
     // 
     // New chat
         if(isset($_POST['create_chat'])){
-            if(!empty(trim(isset($_POST['new_message_reciver']))) && $_POST['new_message_reciver'] != $username){
+            if(!empty(trim(isset($_POST['new_message_reciver'])))){
                 $reciver = $_POST['new_message_reciver'];
                 
                 $mysql_users = mysqli_query($link,"SELECT username,user_id from users Where username = '$reciver'");
@@ -294,8 +294,19 @@
                 }else{
                     $new_message_err = "No Reciver.";
                 }
-            }else if($_POST['new_message_reciver'] == $username){
-                $new_message_err = "Can't send message to yourself.";
+            }
+        }
+    //
+    // Delete chat
+        if(isset($_GET['chat_del'])){
+            $r_id = $_GET['chat_del'];
+            $sql_is_chat = mysqli_query($link, "Select chat_id from chats where (user1 = $r_id AND user2 = $user_id) OR (user2 = $r_id AND user1 = $user_id)");
+            $is_chat = mysqli_fetch_array($sql_is_chat)[0];
+            $sql_del_chat = "Delete from chats where chat_id = $is_chat;"; 
+            if(mysqli_query($link,$sql_del_chat)){
+                header("location: loged.php");
+            }else{
+                echo "error";
             }
         }
     //
@@ -365,7 +376,6 @@
                     $how_many_sql = mysqli_query($link,"SELECT COUNT(`chat_id`) as 'how_many',`chat_id` from chats Where user2 = $user_id OR user1 = $user_id");
                     $how_many = mysqli_fetch_array($how_many_sql)['how_many'];
                     $chatinfo_sql = mysqli_query($link,"SELECT `chat_id`,`user1`,`user2`,`text` from chats Where user2 = '$user_id' OR user1 = '$user_id'");
-                    
 
                     if($how_many > 0){
                         for($i=0;$i<$how_many;$i++){
@@ -379,14 +389,12 @@
                             }
                             $reciver = username($link,$reciver_id);
                             echo "
-                                <a href='loged.php?chat=$reciver_id'><input class='chat' type='button' Value='$reciver'></a><br><br>
+                                <a href='loged.php?chat=$reciver_id'><input class='chat' type='button' Value='$reciver'></a> <a href='loged.php?chat_del=$reciver_id'><input class='chat_del' type='button' Value='X'></a><br><br>
                             ";
                         }  
                     }else{
                         echo "No chats";
                     }
-
-                    
                 
                 ?>
             </div>

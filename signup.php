@@ -6,6 +6,13 @@
     $background_signup = "bg.jpg";
     $form_action = htmlspecialchars($_SERVER['PHP_SELF']);
 
+    // Session control
+    session_start();
+    if(@$_SESSION['loggedin'] == true){
+        header("location: loged.php");
+    }else{
+        session_destroy();
+    }
     if(session_status() == 2){
         session_destroy();
     }
@@ -116,16 +123,16 @@
                 <div class='signup_form'>
                     <form action='<?php echo $form_action ?>' method='post'>
                         
-                        <input class='input_text' $username_err type='text' name='username' value='<?php echo $username ?>' placeholder='Username'><br>
+                        <input class='input_text' $username_err type='text' name='username' value='<?php echo $username ?>' placeholder='Username'  maxlength="<?php echo $max_username ?>"><br>
                         <span class='empty'><?php echo $username_err ?></span><br>
 
-                        <input class='input_text' $name_err type='text' name='name' value='<?php echo $name ?>' placeholder='Name'><br>
+                        <input class='input_text' $name_err type='text' name='name' value='<?php echo $name ?>' placeholder='Name' maxlength="<?php echo $max_name ?>"><br>
                         <span class='empty'><?php echo $name_err ?></span><br>
 
-                        <input class='input_text' $surname_err type='text' name='surname' value='<?php echo $surname ?>' placeholder='Surname'><br>
+                        <input class='input_text' $surname_err type='text' name='surname' value='<?php echo $surname ?>' placeholder='Surname' maxlength="<?php echo $max_surname ?>"><br>
                         <span class='empty'><?php echo $surname_err ?></span><br>
                         
-                        <input class='input_text' $password_err type='password' name='password' placeholder='Password'><br>
+                        <input class='input_text' $password_err type='password' name='password' placeholder='Password' maxlength="<?php echo $max_pass ?>"><br>
                         <span class='empty'><?php echo $password_err ?></span><br>
 
                         <input class='input_text' $confirm_password_err type='password' name='confirm_password' placeholder='Confirm password'><br>
