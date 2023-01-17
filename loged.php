@@ -3,11 +3,6 @@
     require_once "config.php";
     session_start();
 
-    // Session control
-    if($_SESSION['loggedin'] == false){
-        header("location: index.php");
-    }
-
     // Define variables
     $htmlspecialchars = htmlspecialchars($_SERVER['PHP_SELF']);
     $path = $_SESSION['path'];
@@ -20,11 +15,18 @@
     $path_str = str_replace("users/$username/storage","~",$path);
     $opened = false;
 
+    // Session control
+    $sql = mysqli_query($link,"Select activated from users where user_id = $user_id");
+    $activ = mysqli_fetch_array($sql)['activated'];
+    if($_SESSION['loggedin'] == false || $activ != 1){
+        $_SESSION['loggedin'] = false;
+        header("location: index.php");
+    }
+
+    
+
     // Images
-    $icon_path = "icon.ico";
     $profile = "users/$username/av.jpg";
-    $background_loged = "logedbg.jpg";
-    $background_signup = "";
 
     // File size
         function file_size_in_bytes($file){

@@ -7,7 +7,6 @@
     }
 
     // Define variables
-    $background_index = "bg.jpg";
     $username = $password = "";
     $username_err = $password_err = $login_err = "";
     $htmlspecialchars = htmlspecialchars($_SERVER['PHP_SELF']);
