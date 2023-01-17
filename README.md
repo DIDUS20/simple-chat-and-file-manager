@@ -18,7 +18,7 @@ You need to see config.php.
     // - upload_max_filesize=500M                              *
     // - max_file_uploads=30                                   *
     // - find "Indexes Options " and disable                   *
-    // it with "#"                                             *
-    // - configure your SMTP server                            *
+    // it with "#" (in 'httpd.conf')                           *
+    // - configure your SMTP server and link it in 'php.ini'   *
     //                                                         *
     //**********************************************************
