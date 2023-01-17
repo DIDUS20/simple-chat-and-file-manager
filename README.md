@@ -19,5 +19,6 @@ You need to see config.php.
     // - max_file_uploads=30                                   *
     // - find "Indexes Options " and disable                   *
     // it with "#"                                             *
+    // - configure your SMTP server                            *
     //                                                         *
     //**********************************************************
