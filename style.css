@@ -57,6 +57,14 @@ th{
     padding-top: 10px;
     padding-left: 20px;
 }
+.settings{
+    position: absolute;
+    width: 400px;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.96);
+    padding-top: 10px;
+    padding-left: 20px;
+}
 .loged_chats{
     height: 500px;
     float: right;

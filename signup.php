@@ -76,7 +76,7 @@
     // Check email 
         if(empty(trim($_POST["mail"]))){
             $mail_err = "Please enter your e-mail.";
-        }else if(preg_match('/@./',$mail)){
+        }else if(!filter_var(trim($_POST["mail"]), FILTER_VALIDATE_EMAIL)){
             $mail_err = "Please check your e-mail.";
         }else{
             //Prepare a select statement
@@ -101,50 +101,19 @@
                 mysqli_stmt_close($stmt);
             }
         }
-        
-        // Mail verification 
-        function generate_activation_code(): string{
-            return bin2hex(random_bytes(16));
-        }
-        function send_activation_email(string $email, string $activation_code): void{
-            // Create the ver link
-            $activation_link = APP_URL . "/activate.php?email=$email&activation_code=$activation_code";
 
-            // Email header
-            $header = "From:" . SENDER_EMAIL_ADDRESS;
-
-            // Email
-            $subject = 'Please activate your account :)';
-            $message = <<<MESSAGE
-                    Hi,
-                    Please click the following link to activate your account:
-                    $activation_link
-                    MESSAGE;
-
-            // Send the email
-            mail($email, $subject, nl2br($message), $header);
-        }
-
-    // Send mail
-    $activation_code = generate_activation_code();
-
-    // Send ver mail
-    if (send_activation_email($mail, $activation_code)) {
-        $mail_err = "Can't send mail. :/";
-    }
-
-    // Send values and verification mail
+    // Send values
         if(empty(trim($username_err)) && empty(trim($password_err)) && empty(trim($login_err)) && empty(trim($name_err)) && empty(trim($surname_err)) && empty(trim($confirm_password_err)) && empty(trim($mail_err))){
 
             // Prepare an insert statement and storage directory
-            $sql = "INSERT INTO users (`username`,`password`,`name`,`surname`,`email`,`activationcode`,`storage_path`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO users (`username`,`password`,`name`,`surname`,`email`,`storage_path`) VALUES (?, ?, ?, ?, ?, ?)";
             mkdir("users/$username");
             mkdir("users/$username/storage");
             $storage_path = "users/$username/storage";  
          
             if($stmt = mysqli_prepare($link, $sql)){
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmt, "sssssss", $param_username, $param_password, $param_name, $param_surname, $param_mail, $activation_code, $param_storage_path);
+                mysqli_stmt_bind_param($stmt, "ssssss", $param_username, $param_password, $param_name, $param_surname, $param_mail, $param_storage_path);
                 // Set param
                 $param_username = $username;
                 $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
@@ -157,7 +126,7 @@
                 // Attempt to execute the prepared statement
                 if(mysqli_stmt_execute($stmt)){
                     // Redirect to login page
-                    // header("location: index.php");
+                    header("location: index.php");
                 } else{
                     echo "Oops! Something went wrong. Please try again later.";
                 }
@@ -165,9 +134,6 @@
                 mysqli_stmt_close($stmt);
             }
         }
-
-        
-
     }
         
     

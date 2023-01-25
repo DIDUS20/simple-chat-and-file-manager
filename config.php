@@ -4,8 +4,6 @@
     define('DB_USERNAME', 'con');
     define('DB_PASSWORD', '1234');
     define('DB_NAME', 'example');
-    const APP_URL = 'http://localhost/example';
-    const SENDER_EMAIL_ADDRESS = 'no-reply@example.com';
     
     // Connect to mysql db
     $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
@@ -25,6 +23,9 @@
 
     // Icons
     $icon_path = "icon.ico";
+    # default profile image = 'users/def_av.png'
+    # 
+
 
     // Max lenght of inputs in signup.php
     $max_pass = 30;

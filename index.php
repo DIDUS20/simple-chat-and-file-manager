@@ -58,7 +58,7 @@
                                 $_SESSION["path"] = "users/$username/storage";   
                                 $_SESSION["start_time"] = time();
                                 $_SESSION['expire'] = $_SESSION["start_time"]+($e_time*60);                   
-                                // Redirect user to welcome page
+                                // Redirect user to home page
                                 header("location: loged.php");
                             }else{
                                 // Password is invalid, display a generic error message

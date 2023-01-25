@@ -13,20 +13,20 @@
     $storage_path = "users/$username/storage";
     $storage_path_str = str_replace("users/$username/storage","~",$storage_path);
     $path_str = str_replace("users/$username/storage","~",$path);
-    $opened = false;
+    
 
     // Session control
-    $sql = mysqli_query($link,"Select activated from users where user_id = $user_id");
-    $activ = mysqli_fetch_array($sql)['activated'];
-    if($_SESSION['loggedin'] == false || $activ != 1){
-        $_SESSION['loggedin'] = false;
+    if($_SESSION['loggedin'] == false){
         header("location: index.php");
     }
 
+    // Profile images
+    if(!is_file("users/$username/av.png")){
+        $profile = "users/def_av.png";
+    }else{
+        $profile = "users/$username/av.png"; 
+    }
     
-
-    // Images
-    $profile = "users/$username/av.jpg";
 
     // File size
         function file_size_in_bytes($file){
@@ -42,7 +42,7 @@
             }
             return $size;
         }
-    //
+    
     // Download file
         if(isset($_GET['download'])){
             $url = $_GET['download'];
@@ -71,14 +71,14 @@
             }
             unset($_GET['download']);
         }
-    //
+    
     // Logout
         if(isset($_GET['logout'])){
             $username = $_GET['logout'];
             session_destroy();
             header('location: index.php');
         }
-    //
+    
     // Nav in folders
         if(isset($_GET['open'])){
             $_SESSION['path'] = $_GET['open'];
@@ -90,7 +90,7 @@
             $path = $_SESSION['path'];
             header("location: loged.php");
         }
-    //
+    
     // New folder
         if(isset($_GET['new_dir'])){ 
                 echo "
@@ -117,7 +117,7 @@
             }
             
         }
-    //
+
     // Delete
         if(isset($_POST['delete'])){
             if(isset($_POST["check"])){
@@ -147,7 +147,7 @@
             reset($objects);
             rmdir($file);  
         }
-    //
+
     // Copy
         if(isset($_POST['copy'])){
             if(isset($_POST['check'])){
@@ -218,7 +218,7 @@
             }
             
         }
-    //
+    
     // Upload
         if(isset($_GET['upload'])){
             ?>
@@ -231,7 +231,6 @@
             <?php
         }
         if(isset($_POST['Upload_files'])){
-
             foreach($_FILES["upfile"]['error'] as $key => $error){
                 if($error==UPLOAD_ERR_OK){
                     $tmp_name=$_FILES["upfile"]["tmp_name"][$key];
@@ -239,24 +238,20 @@
                     move_uploaded_file($tmp_name,"$path/".$name);
                 }
             }
-
             header("location: loged.php");
         }
-    //
+    
     // Chat
         if(isset($_GET['chat'])){
             // Send values to chat window
-            
             $_SESSION['reciver'] = $_GET['chat'];
             echo "<script> window.open('chat.php','chat',config='height=400,width=700,toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,directories=no, status=no');</script>";
-            
         }
-    // 
+    
     // New chat
         if(isset($_POST['create_chat'])){
             if(!empty(trim(isset($_POST['new_message_reciver'])))){
                 $reciver = $_POST['new_message_reciver'];
-                
                 $mysql_users = mysqli_query($link,"SELECT username,user_id from users Where username = '$reciver'");
                 $reciver_exist = mysqli_fetch_array($mysql_users);
 
@@ -266,7 +261,6 @@
                     $new_message_err = "error";
                     $reciver_id = 0;
                 }
-                
 
                 $mysql_chats = mysqli_query($link,"SELECT COUNT(`chat_id`) as 'how_mach' from chats Where (user1 = $reciver_id AND user2 = $user_id) OR (user2 = $reciver_id AND user1 = $user_id)");
                 $chat_exist = mysqli_fetch_array($mysql_chats);
@@ -298,7 +292,7 @@
                 }
             }
         }
-    //
+
     // Delete chat
         if(isset($_GET['chat_del'])){
             $r_id = $_GET['chat_del'];
@@ -311,12 +305,38 @@
                 echo "error";
             }
         }
-    //
+    // Refresh
+        if(isset($_GET['refresh'])){
+            header("location: loged.php");
+        }
     // Settings
         if(isset($_GET['settings'])){
-            // Features 
+            ?>
+            <div class='settings'>
+                <form action='' method="post" enctype="multipart/form-data">
+                        <input type="file" name="av" multiple required>
+                        <input name='image' type="submit" value="Upload Profile Image"><br>
+                </form>
+            </div>
+            <?php
         }
-    //
+    // Upload profile image
+        if(isset($_POST['image'])){
+            $target_file = "users/$username/".basename($_FILES["av"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+                if($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif" ){
+                    $tmp_name=$_FILES["av"]["tmp_name"];
+                    if(file_exists("users/$username/av.png")){
+                        unlink("users/$username/av.png");
+                    }
+                    move_uploaded_file($tmp_name,"users/$username/av.png");
+                    header("location: loged.php");   
+                }else{
+                    echo "<script>alert('Need PNG, JPG, JPEG, GIF image format !');</script>";
+                    header("location: loged.php");
+                }
+            
+        }
 
     if($_SESSION['loggedin'] == true && session_status() == 2){
         // Check session time
@@ -346,6 +366,8 @@
             <div class='loged_header'>
                 <a href='loged.php?logout=' ><input class='input_header' type='button' name='logout' value='Logout'></a>
                 <a href='loged.php?settings=' ><input class='input_header' type='button' name='settings' value='Settings'></a>
+                <a href='loged.php?refresh=' ><input class='input_header' type='button' name='refresh' value='Refresh'></a>
+                <span style='float:right;'><img src=<?php echo $profile ?> width='50px'></span>
                 <?php echo "<span class='username_header'>$username</span>"; ?>
             </div>
 
@@ -426,7 +448,7 @@
                     </table>
                     <div>
                         <hr>
-                        <input type='submit' name='refresh' value='Refresh'>
+                        
                         <input type='submit' name='delete' <?php $delete_err ?> value='Delete'>
                         <input type='submit' name='copy' value='Copy'><br>
                         <?php echo $copy_err ?>
@@ -443,6 +465,7 @@
 </html>
 <?php
     }else{
+        mysqli_close($link);
         header("location: index.php");
     }
 ?>
