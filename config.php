@@ -24,7 +24,6 @@
     // Icons
     $icon_path = "icon.ico";
     # default profile image = 'users/def_av.png'
-    # 
 
 
     // Max lenght of inputs in signup.php

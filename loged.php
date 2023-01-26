@@ -169,7 +169,7 @@
         if(isset($_POST['Copy_files'])){
             if(!empty(trim($_POST['dest_path']))){
                 // When dest is not storage_path
-                if(is_dir($storage_path."/".$_POST['dest_path'])){
+                if(is_dir($storage_path."/".$_POST['dest_path']) && in_array($_POST['dest_path'],$_SESSION['files'])){
                     $target_path = $storage_path."/".$_POST['dest_path'];
                     $main_dir = str_replace("\\","/",$main_dir)."/example"."/";
                     foreach($_SESSION['files'] as $f){
@@ -182,7 +182,7 @@
                     $_SESSION['files'] = "";
                     header("location: loged.php");
                 }else{
-                    $copy_err = "There is no destination folder";
+                    $copy_err = "Incorrect destination folder";
                 }
             }else{
                 // When dest is storage_path
@@ -314,8 +314,10 @@
             ?>
             <div class='settings'>
                 <form action='' method="post" enctype="multipart/form-data">
-                        <input type="file" name="av" multiple required>
+                        Profile Image: 
+                        <input type="file" name="av">
                         <input name='image' type="submit" value="Upload Profile Image"><br>
+                        <a href='loged.php?refresh=' ><input class='input_header' type='button' name='refresh' value='Refresh'></a>
                 </form>
             </div>
             <?php
@@ -332,7 +334,6 @@
                     move_uploaded_file($tmp_name,"users/$username/av.png");
                     header("location: loged.php");   
                 }else{
-                    echo "<script>alert('Need PNG, JPG, JPEG, GIF image format !');</script>";
                     header("location: loged.php");
                 }
             
@@ -367,7 +368,7 @@
                 <a href='loged.php?logout=' ><input class='input_header' type='button' name='logout' value='Logout'></a>
                 <a href='loged.php?settings=' ><input class='input_header' type='button' name='settings' value='Settings'></a>
                 <a href='loged.php?refresh=' ><input class='input_header' type='button' name='refresh' value='Refresh'></a>
-                <span style='float:right;'><img src=<?php echo $profile ?> width='50px'></span>
+                <img class='profile_pic' src=<?php echo $profile ?>>
                 <?php echo "<span class='username_header'>$username</span>"; ?>
             </div>
 
