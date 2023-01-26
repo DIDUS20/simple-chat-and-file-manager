@@ -9,10 +9,12 @@ You need to see config.php.
     // #Import example.sql into DB                             *
     //                                                         *
     // #SQL commands in DB:                                    *
-    // -create user con identified by '1234';                  *
-    // -GRANT DELETE, SELECT, INSERT, UPDATE ON chats TO con;  *
-    // -GRANT SELECT, INSERT, UPDATE ON users TO con;          *
+    // -create user 'user' identified by 'password';           *
+    // -GRANT DELETE, SELECT, INSERT, UPDATE ON chats TO user; *
+    // -GRANT SELECT, INSERT, UPDATE ON users TO user;         *
     //                                                         *
+    // #Set in config.php file:                                *
+    // - database name and conection settings                  *
     // #Set in php.ini file:                                   *
     // - file_uploads=On                                       *
     // - upload_max_filesize=500M                              *
