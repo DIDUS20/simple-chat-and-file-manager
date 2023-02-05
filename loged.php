@@ -147,6 +147,78 @@
             reset($objects);
             rmdir($file);  
         }
+    // Move
+        if(isset($_POST['move'])){
+            if(isset($_POST['check'])){
+                $_SESSION['files'] = $_POST["check"];
+            ?>
+                <div class='copy_files'>
+                    <form method='post'>
+                        Source folder: <?php echo $path_str; ?>/ <br>
+                        Destination folder: <?php echo $storage_path_str; ?>/ <input class='input_text' type='text' <?php echo $copy_err ?> name='dest_path' Placeholder='path'><br><?php echo $copy_err ?>
+                        <input type='submit' value='Move' name='Move_files'><br>
+                    </form>
+                </div>
+            <?php  
+            }else{
+                $copy_err = "Chose files.";
+            }
+        }
+        if(isset($_POST['Move_files'])){
+            if(!empty(trim($_POST['dest_path']))){
+                if(is_dir($storage_path."/".$_POST['dest_path'])){
+                    $target_path = $storage_path."/".$_POST['dest_path'];
+                    $main_dir = str_replace("\\","/",$main_dir)."/example"."/";
+
+                    // Copy files
+                    foreach($_SESSION['files'] as $f){
+                        if(is_file($f) && !is_file($main_dir.$target_path."/".basename($f))){
+                            copy($main_dir.$f,$main_dir.$target_path."/".basename($f)); 
+                        }else if(is_dir($f) && !is_dir($main_dir.$target_path."/".basename($f))){
+                            dircopy($main_dir.$f,$main_dir.$target_path);
+                        }
+                        
+                    }
+
+                    // Delete files 
+                    foreach($_SESSION['files'] as $f){
+                        if(is_file($f)){
+                            unlink($f);
+                        }else if(is_dir($f)){
+                            rrmdir($f);
+                        } 
+                    }
+                    $_SESSION['files'] = "";
+                    //header("location: loged.php");
+                }else{
+                    $copy_err = "Incorrect destination folder";
+                }
+            }else{
+                // When dest is storage_path
+                if(is_dir($storage_path."/".$_POST['dest_path'])){
+                    $main_dir = str_replace("\\","/",$main_dir)."/example";
+                    foreach($_SESSION['files'] as $f){
+                        if(is_file($f)){
+                            copy($main_dir."/".$f,$main_dir."/".$storage_path."/".basename($f));
+                        }else if(is_dir($f)){
+                            dircopy($main_dir."/".$f,$main_dir."/".$storage_path);
+                        }
+                    }
+                    // Delete files 
+                    foreach($_SESSION['files'] as $f){
+                        if(is_file($f)){
+                            unlink($f);
+                        }else if(is_dir($f)){
+                            rrmdir($f);
+                        } 
+                    }
+                    $_SESSION['files'] = "";
+                }else{
+                    $copy_err = "There is no destination folder";
+                }
+            }
+        }
+
 
     // Copy
         if(isset($_POST['copy'])){
@@ -451,6 +523,7 @@
                         <hr>
                         
                         <input type='submit' name='delete' <?php $delete_err ?> value='Delete'>
+                        <input type='submit' name='move' value='Move'>
                         <input type='submit' name='copy' value='Copy'><br>
                         <?php echo $copy_err ?>
                         <?php echo $delete_err ?>
